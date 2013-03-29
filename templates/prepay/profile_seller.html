@@ -1,0 +1,55 @@
+{% extends "prepay/base.html" %}
+
+{% load url from future %}
+
+{% block content %}
+
+<h2>Seller Profile</h2>
+
+{% if user.photo %}
+    <img src="{{user.photo}}"><br/>
+{% endif %}
+Name: {{user.first_name}} {{user.last_name}}<br/>
+Rating: {{user.rating}}<br/>
+Username: {{user.username}}<br/>
+Password: <a href= "{% url 'admin:password_change' %}">Change password?</a><br/>
+Email: {{user.email}}<br/>
+{% if user.phone_number.all %}
+Phone number:
+{% for item in user.phone_number.all %}
+    {{item}}<br/>
+{% endfor %}{% endif %}
+{% if user.street_address.all %}
+Street Address:
+{% for item in user.street_address.all %}
+    {{item}}<br/>
+{% endfor %}{% endif %}
+{% if user.instant_messenger.all %}
+Instant messenger:
+{% for item in user.instant_messenger.all %}
+    {{item}}<br/>
+{% endfor %}{% endif %}
+{% if user.web_site.all %}
+Website:
+{% for item in user.web_site.all %}
+    {{item}}<br/>
+{% endfor %}{% endif %}
+Products: 
+{% for p in user.products.all %}
+    {{ p.name }},
+{% empty %}
+    No products!
+{% endfor %}
+<br/>
+
+<!-- http://mitchgt.com/prepay/admin/prepay/listing/add/ -->
+<a href = "{% url 'admin:prepay_product_add' %}">Add a new product?</a><br/>
+<!--Listings: {{listings}}<br/>-->
+<a href = "{% url 'admin:prepay_listing_add' %}">Create a new listing?</a><br/>
+
+{% if user.about %}
+About me:
+    {{user.about}}<br/>
+{% endif %}
+
+{% endblock %}
